@@ -14,12 +14,13 @@ const { config, hass } = defineProps<{ hass?: HomeAssistant; config?: Config }>(
 
 const slider = useTemplateRef('slider');
 const entity = useEntity(
-  toRef(() => hass) as Ref<HomeAssistant>,
-  computed(() => config?.entity),
+  () => hass,
+  () => config?.entity,
+  () => config?.name,
 );
 const { isOn, rgbColor, brightness } = useLight(entity);
 
-const name = computed(() => {
+const formattedName = computed(() => {
   if (config?.name) return config.name;
   return entity.name.value;
 });
@@ -63,7 +64,7 @@ onLongPress(slider, (event) => moreInfo(event));
       <ha-icon :icon="icon" />
     </button>
 
-    <span>{{ name }}</span>
+    <span>{{ formattedName }}</span>
 
     <div class="fill" :style="{ '--value': localBrightness }" />
 
@@ -85,6 +86,9 @@ onLongPress(slider, (event) => moreInfo(event));
   color: var(--primary-text-color);
   border-radius: var(--ha-card-border-radius, 12px);
   box-shadow: var(--ha-card-box-shadow, none);
+  border-width: var(--ha-card-border-width, 1px);
+  border-style: solid;
+  border-color: var(--ha-card-border-color, var(--divider-color, #e0e0e0));
   width: 100%;
   isolation: isolate;
   position: relative;

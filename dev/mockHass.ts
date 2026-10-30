@@ -40,6 +40,9 @@ export function createMockHass(initial: HassEntities) {
         default_theme: 'dark',
         themes: {},
       },
+      formatEntityName(_, name) {
+        return name;
+      },
       callService,
       callWS: async (msg: unknown) => {
         console.info('[mock] callWS', msg);

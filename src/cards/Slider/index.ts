@@ -31,7 +31,12 @@ defineHaCard(Card, {
             },
           },
         },
-        { name: 'name', required: false, context: { entity: 'entity' } },
+        {
+          name: 'name',
+          required: false,
+          selector: { entity_name: {} },
+          context: { entity: 'entity' },
+        },
       ],
     };
   },

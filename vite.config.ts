@@ -23,12 +23,12 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'custom_components/heike/www',
+    outDir: 'dist',
 
     lib: {
       entry: fileURLToPath(new URL('./src/main.ts', import.meta.url)),
       name: 'heike',
-      fileName: 'heike',
+      fileName: 'ha-heike',
       formats: ['es'],
     },
   },

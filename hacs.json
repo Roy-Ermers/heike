@@ -1,6 +1,6 @@
 {
   "name": "heike",
-  "filename": "custom_components/heike/www/heike.js",
+  "filename": "heike.js",
   "homeassistant": "2025.10.0",
   "render_readme": true
 }

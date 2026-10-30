@@ -1,69 +1,81 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { computeIcon, computeName, fireEvent, stateIcon, turnOnOffEntity, type HomeAssistant, type LovelaceCardConfig } from "custom-card-helpers";
+import { computed, ref, toRef, useTemplateRef, watch, watchEffect, type Ref } from 'vue';
+import { fireEvent, stateIcon, type HomeAssistant } from 'custom-card-helpers';
+import { useEntity } from '@/composables/useEntity';
+import { useLight } from '@/composables/useLight';
+import { onLongPress, useCurrentElement } from '@vueuse/core';
 
 interface Config {
-  entity: string
-  name?: string
+  entity: string;
+  name?: string;
 }
 
-const { config, hass } = defineProps<{ hass?: HomeAssistant; config?: Config }>()
+const { config, hass } = defineProps<{ hass?: HomeAssistant; config?: Config }>();
 
-const state = computed(() => (config?.entity ? hass?.states[config.entity] : undefined))
+const slider = useTemplateRef('slider');
+const entity = useEntity(
+  toRef(() => hass) as Ref<HomeAssistant>,
+  computed(() => config?.entity),
+);
+const { isOn, rgbColor, brightness } = useLight(entity);
 
-const name = computed(
-  () => {
-    if (config?.name)
-      return config.name;
+const name = computed(() => {
+  if (config?.name) return config.name;
+  return entity.name.value;
+});
 
+const rgbCss = computed(() => {
+  if (!rgbColor.value) return 'var(--accent-color)';
+  return `rgb(${rgbColor.value.join()})`;
+});
 
-    if (state.value) return computeName(state.value)
-  })
+const icon = computed(() => (entity.state.value ? stateIcon(entity.state.value) : undefined));
 
-const rgb = computed(() =>
-  `rgb(${state.value?.attributes.rgb_color.join()})`
-)
+const localBrightness = ref(brightness.value ?? 0);
 
-const brightness = computed({
-  get: () => {
-    if (isOn.value)
-      return Math.round(((state.value?.attributes.brightness ?? 0) / 255) * 100);
-    return 0;
-  },
-  set: value => {
-    if (!config) return
-    if (value === 0) {
-      hass?.callService('light', 'turn_off', { entity_id: config!.entity })
-
-    } else
-      hass?.callService('light', 'turn_on', { entity_id: config!.entity, brightness_pct: value })
-  }
-})
-
-const icon = computed(() => state.value ? stateIcon(state.value) : undefined);
-
-const isOn = computed({
-  get: () => state.value?.state === 'on',
-  set: value => {
-    if (hass && config)
-      turnOnOffEntity(hass, config?.entity, value);
-  }
-})
+watch([brightness, isOn], () => {
+  if (isOn.value) localBrightness.value = brightness.value;
+  else localBrightness.value = 0;
+});
 
 function moreInfo(e: Event) {
-  if (!config) return
+  console.log('moreinfo');
+  if (!slider.value) return;
 
-  fireEvent(e.currentTarget as HTMLElement, 'hass-more-info', { entityId: config.entity })
+  fireEvent(slider.value, 'hass-more-info', { entityId: config!.entity });
 }
+
+function updateBrightness() {
+  const value = slider.value?.valueAsNumber;
+  if (value === undefined) {
+    return;
+  }
+
+  localBrightness.value = value;
+  brightness.value = value;
+}
+
+onLongPress(slider, (event) => moreInfo(event));
 </script>
 <template>
-  <label :aria-label="name" :aria-checked="isOn" v-if="state" class="card" :style="{ '--rgb': rgb }">
-    <button @click="moreInfo">
+  <label :aria-label="name" :aria-checked="isOn" class="card" :style="{ '--rgb': rgbCss }">
+    <button @click="isOn = !isOn">
       <ha-icon :icon="icon" />
     </button>
+
     <span>{{ name }}</span>
-    <div class="fill" :style="{ '--value': brightness }" />
-    <input type="range" min="0" max="100" v-model.number="brightness" step="1" />
+
+    <div class="fill" :style="{ '--value': localBrightness }" />
+
+    <input
+      ref="slider"
+      type="range"
+      min="0"
+      max="100"
+      v-model.number="localBrightness"
+      @change="updateBrightness"
+      step="1"
+    />
   </label>
 </template>
 
@@ -71,7 +83,6 @@ function moreInfo(e: Event) {
 .card {
   background: var(--ha-card-background, var(--card-background-color, #fff));
   color: var(--primary-text-color);
-  color: contrast-color(var(--rgb));
   border-radius: var(--ha-card-border-radius, 12px);
   box-shadow: var(--ha-card-box-shadow, none);
   width: 100%;
@@ -84,38 +95,41 @@ function moreInfo(e: Event) {
   gap: 1rem;
   align-items: center;
   overflow: clip;
+  transition: color 250ms ease;
 
-  &[aria-checked="false"] {
+  &[aria-checked='false'] {
     color: var(--disabled-text-color);
+
+    > button {
+      background-color: var(--secondary-background-color);
+      color: var(--disabled-text-color);
+    }
   }
 
-  >* {
+  > * {
     z-index: 1;
   }
 
-  >span {
+  > span {
     pointer-events: none;
     font-size: 0.875rem;
     font-weight: 600;
   }
 
-  >button {
+  > button {
     aspect-ratio: 1;
     block-size: 3rem;
-    margin-inline-start: 0.5rem;
+    margin-inline-start: 0.25rem;
     border: none;
-    border-radius: 100%;
-    background-color: var(--secondary-background-color);
+    border-radius: calc(var(--ha-card-border-radius, 12px) + 0.25rem);
+    background: var(--secondary-background-color);
+    color: var(--rgb);
     display: grid;
+    cursor: pointer;
     place-content: center;
-
-    >ha-icon {
-      block-size: 1.5rem;
-      inline-size: 1.5rem;
-    }
   }
 
-  >.fill {
+  > .fill {
     position: absolute;
     inset-block: 0;
     inset-inline-start: 0;
@@ -123,10 +137,12 @@ function moreInfo(e: Event) {
     border-radius: inherit;
     background: var(--rgb);
     z-index: 0;
-    transition: width 50ms ease;
+    transition:
+      width 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      background-color 250ms ease;
   }
 
-  >input[type='range'] {
+  > input[type='range'] {
     position: absolute;
     inset: 0;
     width: 100%;

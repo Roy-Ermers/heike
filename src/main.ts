@@ -1,1 +1,1 @@
-import './cards/Slider'
+import './cards/Slider';

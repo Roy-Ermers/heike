@@ -12,6 +12,7 @@
     "format": "oxfmt src/"
   },
   "dependencies": {
+    "@vueuse/core": "^15.0.0",
     "custom-card-helpers": "^2.0.0",
     "home-assistant-js-websocket": "^9.8.0",
     "vue": "^3.5.42"

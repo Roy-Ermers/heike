@@ -4,7 +4,7 @@ if (!customElements.get('ha-card')) {
     'ha-card',
     class extends HTMLElement {
       constructor() {
-        super()
+        super();
         this.attachShadow({ mode: 'open' }).innerHTML = `
           <style>
             :host {
@@ -16,8 +16,8 @@ if (!customElements.get('ha-card')) {
               overflow: hidden;
             }
           </style>
-          <slot></slot>`
+          <slot></slot>`;
       }
     },
-  )
+  );
 }

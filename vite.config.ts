@@ -1,8 +1,8 @@
-import { fileURLToPath, URL } from 'node:url'
+import { fileURLToPath, URL } from 'node:url';
 
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import vueDevTools from 'vite-plugin-vue-devtools'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import vueDevTools from 'vite-plugin-vue-devtools';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -23,7 +23,7 @@ export default defineConfig({
     },
   },
   define: {
-    'process.env.NODE_ENV': '"production"'
+    'process.env.NODE_ENV': '"production"',
   },
   build: {
     outDir: 'dist',
@@ -31,8 +31,8 @@ export default defineConfig({
     lib: {
       entry: fileURLToPath(new URL('./src/main.ts', import.meta.url)),
       name: 'heike',
-      fileName: 'ha-heike',
+      fileName: 'heike',
       formats: ['es'],
     },
   },
-})
+});

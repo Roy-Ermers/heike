@@ -40,7 +40,7 @@ export function createMockHass(initial: HassEntities) {
         default_theme: 'dark',
         themes: {},
       },
-      formatEntityName(_, name) {
+      formatEntityName(_: unknown, name: string) {
         return name;
       },
       callService,

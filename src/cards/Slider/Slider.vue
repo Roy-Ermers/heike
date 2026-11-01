@@ -59,7 +59,7 @@ function updateBrightness() {
 onLongPress(slider, (event) => moreInfo(event));
 </script>
 <template>
-  <label :aria-label="name" :aria-checked="isOn" class="card" :style="{ '--rgb': rgbCss }">
+  <label :aria-checked="isOn" class="card" :style="{ '--rgb': rgbCss }">
     <button @click="isOn = !isOn">
       <ha-icon :icon="icon" />
     </button>

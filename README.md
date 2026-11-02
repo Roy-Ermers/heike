@@ -1,44 +1,41 @@
-# ha-heike
+# heike
 
-This template should help get you started developing with Vue 3 in Vite.
+A collection of custom Home Assistant cards built with Vue 3 and Web Components.
 
-## Recommended IDE Setup
+## Components
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **HeathSlider**: A responsive slider control for entities (e.g., light brightness).
 
-This project replaces its workspace TypeScript package with [typescript-native-bridge](https://github.com/johnsoncodehk/typescript-native-bridge). Command-line tools use the bridge automatically. To use it in VS Code after installing dependencies, accept the prompt to use the workspace TypeScript version. If the prompt does not appear, run **TypeScript: Select TypeScript Version** and choose **Use Workspace Version**.
+### Prerequisites
 
-## Recommended Browser Setup
+- [pnpm](https://pnpm.io/)
+- Node.js (version ^22.18.0 || >=24.12.0)
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+### Available Scripts
 
-## Type Support for `.vue` Imports in TS
+- `pnpm dev`: Start the development server.
+- `pnpm build`: Build the production library for Home Assistant.
+- `pnpm type-check`: Run TypeScript type verification.
+- `pnpm format`: Format the code using `oxfmt`.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Adding New Cards
 
-## Customize configuration
+To add a new card:
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+1. Create a new `.vue` file in `src/`.
+2. Wrap it with `defineHaCard`.
+3. Import that file in `src/main.ts`
 
-## Project Setup
+## Building for Home Assistant
 
-```sh
-pnpm install
-```
+Build the project to generate the distribution bundle:
 
-### Compile and Hot-Reload for Development
-
-```sh
-pnpm dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
+```bash
 pnpm build
 ```
+
+Reference the generated files in `dist/` as resources in your Home Assistant Lovelace dashboard.
+
+## License
+
+This project is open-source.

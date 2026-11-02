@@ -9,7 +9,7 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "format": "oxfmt src/",
-    "release": "pnpm build && changelogen --release --push --publish"
+    "release": "pnpm build && changelogen --release --push"
   },
   "dependencies": {
     "@vueuse/core": "^15.0.0",

@@ -1,15 +1,6 @@
-import type { HomeAssistant, LovelaceCardConfig, LovelaceCardEditor } from 'custom-card-helpers';
+import type { HomeAssistant, LovelaceCardConfig } from 'custom-card-helpers';
 import { defineCustomElement, type Component, type DefineComponent } from 'vue';
 
-interface SchemaEntry {
-  name: string;
-  type: 'grid' | 'entity';
-  required?: boolean;
-  selector?: { entity: unknown };
-}
-interface ConfigForm {
-  schema: [];
-}
 export interface CardMeta {
   type: string;
   name: string;

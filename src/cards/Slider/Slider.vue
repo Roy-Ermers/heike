@@ -41,7 +41,6 @@ watch([brightness, isOn], () => {
 });
 
 function moreInfo(e: Event) {
-  console.log('moreinfo');
   if (!slider.value) return;
 
   fireEvent(slider.value, 'hass-more-info', { entityId: config!.entity });
@@ -67,7 +66,7 @@ onLongPress(slider, (event) => moreInfo(event));
 
     <span class="label">
       {{ formattedName }}
-      <small v-if="isOn && !config.hidePercentage">{{ localBrightness }}%</small>
+      <small v-if="isOn && !config?.hidePercentage">{{ localBrightness }}%</small>
     </span>
 
     <div class="fill" :style="{ '--value': localBrightness }" />

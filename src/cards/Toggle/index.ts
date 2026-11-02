@@ -16,8 +16,11 @@ defineHaCard(Card, {
     }
 
     const state = hass?.states?.[entityId];
+    const supportedFeatures = state?.attributes.supported_features as unknown as
+      | string[]
+      | undefined;
 
-    if (state?.attributes.supported_features?.includes('onoff')) return null;
+    if (!supportedFeatures?.includes('onoff')) return null;
 
     return {
       config: { type: 'custom:heike-toggle', entity: entityId },

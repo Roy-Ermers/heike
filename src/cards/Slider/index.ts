@@ -17,7 +17,11 @@ defineHaCard(Card, {
 
     const state = hass?.states?.[entityId];
 
-    if (state?.attributes.supported_features?.includes('onoff')) return null;
+    const supportedFeatures = state?.attributes.supported_features as unknown as
+      | string[]
+      | undefined;
+
+    if (supportedFeatures?.includes('onoff')) return null;
 
     return {
       config: { type: 'custom:heike-slider', entity: entityId },

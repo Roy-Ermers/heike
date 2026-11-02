@@ -30,7 +30,11 @@ export const defaultStates: HassEntities = Object.fromEntries([
     hs_color: [22.1, 84.3],
     xy_color: [0.58, 0.37],
   }),
-  entity('light.bedroom', 'off', { friendly_name: 'Bedroom' }),
+  entity('light.bedroom', 'off', {
+    friendly_name: 'Bedroom',
+    supported_color_modes: ['onoff'],
+    color_mode: 'onoff',
+  }),
   entity('switch.coffee_machine', 'off', { friendly_name: 'Coffee Machine' }),
   entity('sensor.living_room_temperature', '21.4', {
     friendly_name: 'Living Room Temperature',

@@ -64,7 +64,7 @@ onLongPress(slider, (event) => moreInfo(event));
       <ha-icon :icon="icon" />
     </button>
 
-    <span>{{ formattedName }}</span>
+    <span class="label">{{ formattedName }}</span>
 
     <div class="fill" :style="{ '--value': localBrightness }" />
 
@@ -114,23 +114,32 @@ onLongPress(slider, (event) => moreInfo(event));
     z-index: 1;
   }
 
-  > span {
+  > .label {
     pointer-events: none;
     font-size: 0.875rem;
     font-weight: 600;
   }
 
   > button {
+    display: inline-grid;
+    place-content: center;
     aspect-ratio: 1;
     block-size: 3rem;
+    margin: 0;
+    padding: 0.25rem;
     margin-inline-start: 0.25rem;
     border: none;
+    box-sizing: border-box;
     border-radius: calc(var(--ha-card-border-radius, 12px) + 0.25rem);
     background: var(--secondary-background-color);
     color: var(--rgb);
     display: grid;
     cursor: pointer;
     place-content: center;
+    padding: 0.25rem;
+    transition:
+      background-color 250ms ease,
+      color 250ms ease;
   }
 
   > .fill {
@@ -142,7 +151,7 @@ onLongPress(slider, (event) => moreInfo(event));
     background: var(--rgb);
     z-index: 0;
     transition:
-      width 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      width 100ms ease-in-out,
       background-color 250ms ease;
   }
 

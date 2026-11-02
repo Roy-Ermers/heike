@@ -14,6 +14,11 @@ defineHaCard(Card, {
     if (entityId.split('.')[0] !== 'light') {
       return null;
     }
+
+    const state = hass?.states?.[entityId];
+
+    if (state?.attributes.supported_features?.includes('onoff')) return null;
+
     return {
       config: { type: 'custom:heike-slider', entity: entityId },
     };
@@ -28,6 +33,7 @@ defineHaCard(Card, {
           selector: {
             entity: {
               domain: 'light',
+              supported_features: [],
             },
           },
         },

@@ -5,7 +5,7 @@ defineHaCard(Card, {
   type: 'heike-slider',
   name: 'heike slider',
   description: 'Edit lights in a smooth way',
-  stubConfig: { entity: 'light.all_lights' },
+  stubConfig: { entity: 'light.all_lights', hidePercentage: false },
   validate(config) {
     if (!config.entity) throw new Error('You need to define an entity');
   },
@@ -42,6 +42,11 @@ defineHaCard(Card, {
           required: false,
           selector: { entity_name: {} },
           context: { entity: 'entity' },
+        },
+        {
+          name: 'hidePercentage',
+          required: false,
+          selector: { boolean: {} },
         },
       ],
     };

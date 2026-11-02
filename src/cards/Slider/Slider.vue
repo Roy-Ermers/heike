@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { computed, ref, toRef, useTemplateRef, watch, watchEffect, type Ref } from 'vue';
+import { computed, ref, useTemplateRef, watch } from 'vue';
 import { fireEvent, stateIcon, type HomeAssistant } from 'custom-card-helpers';
 import { useEntity } from '@/composables/useEntity';
 import { useLight } from '@/composables/useLight';
-import { onLongPress, useCurrentElement } from '@vueuse/core';
+import { onLongPress } from '@vueuse/core';
 
 interface Config {
   entity: string;
   name?: string;
+  hidePercentage?: boolean;
 }
 
 const { config, hass } = defineProps<{ hass?: HomeAssistant; config?: Config }>();
@@ -64,7 +65,10 @@ onLongPress(slider, (event) => moreInfo(event));
       <ha-icon :icon="icon" />
     </button>
 
-    <span class="label">{{ formattedName }}</span>
+    <span class="label">
+      {{ formattedName }}
+      <small v-if="isOn && !config.hidePercentage">{{ localBrightness }}%</small>
+    </span>
 
     <div class="fill" :style="{ '--value': localBrightness }" />
 
@@ -115,9 +119,16 @@ onLongPress(slider, (event) => moreInfo(event));
   }
 
   > .label {
+    display: grid;
     pointer-events: none;
     font-size: 0.875rem;
     font-weight: 600;
+
+    > small {
+      font-size: 0.75rem;
+      font-weight: 500;
+      opacity: 0.75;
+    }
   }
 
   > button {

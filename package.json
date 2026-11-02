@@ -1,7 +1,6 @@
 {
   "name": "ha-heike",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +8,8 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
-    "format": "oxfmt src/"
+    "format": "oxfmt src/",
+    "release": "pnpm build && changelogen --release --push --publish"
   },
   "dependencies": {
     "@vueuse/core": "^15.0.0",
@@ -22,6 +22,7 @@
     "@types/node": "^24.13.4",
     "@vitejs/plugin-vue": "^6.0.8",
     "@vue/tsconfig": "^0.9.1",
+    "changelogen": "^0.6.2",
     "iconify-icon": "^3.0.4",
     "npm-run-all2": "^9.0.3",
     "oxfmt": "^0.67.0",

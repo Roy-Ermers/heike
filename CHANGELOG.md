@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.6
+
+[compare changes](https://git.royermers.nl/roy-ermers/ha-heike/compare/v0.0.5...v0.0.6)
+
+### 🩹 Fixes
+
+- Build (000d914)
+
+### ❤️ Contributors
+
+- Roy Ermers <roy.ermers@medapp.nl>
+
 ## v0.0.5
 
 [compare changes](https://git.royermers.nl/roy-ermers/ha-heike/compare/v0.0.4...v0.0.5)

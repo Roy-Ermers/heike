@@ -85,6 +85,7 @@ onLongPress(slider, (event) => moreInfo(event));
 
 <style scoped>
 .card {
+  font-family: var(--ha-font-family-body);
   background: var(--ha-card-background, var(--card-background-color, #fff));
   color: var(--primary-text-color);
   border-radius: var(--ha-card-border-radius, 12px);

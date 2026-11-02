@@ -47,6 +47,7 @@ onLongPress(toggle, (event) => moreInfo(event));
 
 <style scoped>
 .heike-toggle {
+  font-family: var(--ha-font-family-body);
   background: var(--ha-card-background, var(--card-background-color, #fff));
   color: var(--disabled-text-color);
   border-radius: var(--ha-card-border-radius, 12px);
@@ -72,7 +73,7 @@ onLongPress(toggle, (event) => moreInfo(event));
 
   > .label {
     pointer-events: none;
-    font-size: 0.875rem;
+    font-size: var(--ha-font-size-m);
     font-weight: 600;
   }
 

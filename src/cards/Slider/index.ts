@@ -17,7 +17,7 @@ defineHaCard(Card, {
 
     const state = hass?.states?.[entityId];
 
-    const supportedFeatures = state?.attributes.supported_features as unknown as
+    const supportedFeatures = state?.attributes.supported_color_modes as unknown as
       | string[]
       | undefined;
 

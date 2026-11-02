@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.5
+
+[compare changes](https://git.royermers.nl/roy-ermers/ha-heike/compare/v0.0.4...v0.0.5)
+
+### 🚀 Enhancements
+
+- **slider:** Add the ability to show the percentage as a number (2a09b8d)
+
+### ❤️ Contributors
+
+- Roy Ermers <roy.ermers@medapp.nl>
+
 ## v0.0.4
 
 [compare changes](https://git.royermers.nl/roy-ermers/ha-heike/compare/v0.0.3...v0.0.4)

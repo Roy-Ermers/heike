@@ -4,6 +4,7 @@ import { fireEvent, stateIcon, type HomeAssistant } from 'custom-card-helpers';
 import { useEntity } from '@/composables/useEntity';
 import { useLight } from '@/composables/useLight';
 import { onLongPress } from '@vueuse/core';
+import TileIcon from '@/components/TileIcon.vue';
 
 interface Config {
   entity: string;
@@ -59,14 +60,14 @@ function updateBrightness() {
 onLongPress(slider, (event) => moreInfo(event));
 </script>
 <template>
-  <label :aria-checked="isOn" class="card" :style="{ '--rgb': rgbCss }">
-    <button @click="isOn = !isOn">
-      <ha-icon :icon="icon" />
-    </button>
+  <label :aria-checked="isOn" class="card" :style="{ '--color': rgbCss }">
+    <TileIcon @click="isOn = !isOn" :icon tag="button" :color="rgbCss" />
 
     <span class="label">
       {{ formattedName }}
-      <small v-if="isOn && !config?.hidePercentage">{{ localBrightness }}%</small>
+      <small v-if="isOn && localBrightness > 0 && !config?.hidePercentage"
+        >{{ localBrightness }}%</small
+      >
     </span>
 
     <div class="fill" :style="{ '--value': localBrightness }" />
@@ -131,35 +132,13 @@ onLongPress(slider, (event) => moreInfo(event));
     }
   }
 
-  > button {
-    display: inline-grid;
-    place-content: center;
-    aspect-ratio: 1;
-    block-size: 3rem;
-    margin: 0;
-    padding: 0.25rem;
-    margin-inline-start: 0.25rem;
-    border: none;
-    box-sizing: border-box;
-    border-radius: calc(var(--ha-card-border-radius, 12px) + 0.25rem);
-    background: var(--secondary-background-color);
-    color: var(--rgb);
-    display: grid;
-    cursor: pointer;
-    place-content: center;
-    padding: 0.25rem;
-    transition:
-      background-color 250ms ease,
-      color 250ms ease;
-  }
-
   > .fill {
     position: absolute;
     inset-block: 0;
     inset-inline-start: 0;
     width: calc(var(--value) * 1%);
     border-radius: inherit;
-    background: var(--rgb);
+    background: var(--color);
     z-index: 0;
     transition:
       width 100ms ease-in-out,

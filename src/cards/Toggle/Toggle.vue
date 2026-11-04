@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, ref, toRef, useTemplateRef, watch, watchEffect, type Ref } from 'vue';
+import { computed, useTemplateRef } from 'vue';
 import { fireEvent, stateIcon, type HomeAssistant } from 'custom-card-helpers';
 import { useEntity } from '@/composables/useEntity';
 import { useLight } from '@/composables/useLight';
-import { onLongPress, useCurrentElement } from '@vueuse/core';
+import { onLongPress } from '@vueuse/core';
+import TileIcon from '@/components/TileIcon.vue';
 
 interface Config {
   entity: string;
@@ -37,9 +38,7 @@ onLongPress(toggle, (event) => moreInfo(event));
 </script>
 <template>
   <button :aria-checked="isOn" class="heike-toggle" @click="isOn = !isOn">
-    <span class="icon">
-      <ha-icon :icon="icon" />
-    </span>
+    <TileIcon :icon :color="isOn ? 'var(--accent-color)' : undefined" />
 
     <span class="label">{{ formattedName }}</span>
   </button>
@@ -55,6 +54,7 @@ onLongPress(toggle, (event) => moreInfo(event));
   border-width: var(--ha-card-border-width, 1px);
   border-style: solid;
   border-color: var(--ha-card-border-color, var(--divider-color, #e0e0e0));
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 1rem;
@@ -75,24 +75,6 @@ onLongPress(toggle, (event) => moreInfo(event));
     pointer-events: none;
     font-size: var(--ha-font-size-m);
     font-weight: 600;
-  }
-
-  > .icon {
-    display: inline-grid;
-    place-content: center;
-    aspect-ratio: 1;
-    block-size: 3rem;
-    margin: 0;
-    padding: 0.25rem;
-    margin-inline-start: 0.25rem;
-    border: none;
-    box-sizing: border-box;
-    border-radius: calc(var(--ha-card-border-radius, 12px) + 0.25rem);
-    background-color: var(--secondary-background-color);
-    color: var(--disabled-text-color);
-    transition:
-      background-color 250ms ease,
-      color 250ms ease;
   }
 
   &[aria-checked='true'] {

@@ -1,6 +1,7 @@
-import { computeName, type HomeAssistant } from 'custom-card-helpers';
+import { computeName, turnOnOffEntity, type HomeAssistant } from 'custom-card-helpers';
 import type { HassEntity } from 'home-assistant-js-websocket';
 import { type MaybeRefOrGetter, toRef, type Ref, computed, toValue } from 'vue';
+import useLocalValue from './useLocalValue';
 
 declare module 'custom-card-helpers' {
   interface HomeAssistant {
@@ -24,7 +25,17 @@ export function useEntity(
     return computeName(state.value);
   });
 
+  const isOn = useLocalValue({
+    get: () => state.value?.state === 'on',
+    set: (value) => {
+      if (hass.value && id.value) {
+        turnOnOffEntity(hass.value, id.value, value);
+      }
+    },
+  });
+
   return {
+    isOn,
     name,
     state,
     hass,

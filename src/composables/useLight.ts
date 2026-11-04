@@ -18,15 +18,6 @@ export function useLight(entity: Entity) {
     },
   });
 
-  const isOn = useLocalValue({
-    get: () => entity.state.value?.state === 'on',
-    set: (value) => {
-      if (entity.hass.value && entity.id.value) {
-        turnOnOffEntity(entity.hass.value, entity.id.value, value);
-      }
-    },
-  });
-
   const brightness = useLocalValue({
     get: () => {
       return Math.round(((entity.state.value?.attributes.brightness ?? 0) / 255) * 100);
@@ -46,7 +37,7 @@ export function useLight(entity: Entity) {
 
   return {
     rgbColor,
-    isOn,
+    isOn: entity.isOn,
     brightness,
   };
 }

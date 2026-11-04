@@ -18,13 +18,13 @@ const { tag = 'span' } = defineProps<Props>();
   display: inline-grid;
   place-content: center;
   aspect-ratio: 1;
-  block-size: 3rem;
+  block-size: 2.25rem;
   margin: 0;
   padding: 0.25rem;
-  margin-inline-start: 0.25rem;
+  margin-inline-start: 0.5rem;
   border: none;
   box-sizing: border-box;
-  border-radius: calc(var(--ha-card-border-radius, 12px) + 0.25rem);
+  border-radius: 9999px;
   background-color: rgb(from var(--state-inactive-color) r g b / 0.2);
   color: var(--state-inactive-color);
   transition:

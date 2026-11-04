@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useTemplateRef, watch } from 'vue';
-import { fireEvent, stateIcon, type HomeAssistant } from 'custom-card-helpers';
+import { fireEvent, stateIcon, type HomeAssistant, computeState } from 'custom-card-helpers';
 import { useEntity } from '@/composables/useEntity';
 import { useLight } from '@/composables/useLight';
 import { onLongPress } from '@vueuse/core';
@@ -20,7 +20,7 @@ const entity = useEntity(
   () => config?.entity,
   () => config?.name,
 );
-const { isOn, rgbColor, brightness } = useLight(entity);
+const { rgbColor, brightness, isOn } = useLight(entity);
 
 const formattedName = computed(() => {
   if (config?.name) return config.name;
@@ -58,6 +58,8 @@ function updateBrightness() {
 }
 
 onLongPress(slider, (event) => moreInfo(event));
+
+const state = computed(() => computeState(entity.state.value!));
 </script>
 <template>
   <label :aria-checked="isOn" class="card" :style="{ '--color': rgbCss }">
@@ -65,9 +67,11 @@ onLongPress(slider, (event) => moreInfo(event));
 
     <span class="label">
       {{ formattedName }}
-      <small v-if="isOn && localBrightness > 0 && !config?.hidePercentage"
-        >{{ localBrightness }}%</small
-      >
+
+      <template v-if="isOn && !config?.hidePercentage">
+        <small v-if="localBrightness > 0">{{ localBrightness }}%</small>
+        <small v-else>{{ state }}</small>
+      </template>
     </span>
 
     <div class="fill" :style="{ '--value': localBrightness }" />
@@ -107,8 +111,6 @@ onLongPress(slider, (event) => moreInfo(event));
   transition: color 250ms ease;
 
   &[aria-checked='false'] {
-    color: var(--disabled-text-color);
-
     > button {
       background-color: var(--secondary-background-color);
       color: var(--disabled-text-color);
@@ -122,7 +124,7 @@ onLongPress(slider, (event) => moreInfo(event));
   > .label {
     display: grid;
     pointer-events: none;
-    font-size: 0.875rem;
+    font-size: var(--ha-font-size-m);
     font-weight: 600;
 
     > small {

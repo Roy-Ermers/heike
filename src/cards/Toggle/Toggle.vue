@@ -38,7 +38,7 @@ onLongPress(toggle, (event) => moreInfo(event));
 </script>
 <template>
   <button :aria-checked="isOn" class="heike-toggle" @click="isOn = !isOn">
-    <TileIcon :icon :color="isOn ? 'var(--accent-color)' : undefined" />
+    <TileIcon :icon :color="isOn ? 'var(--primary-color)' : undefined" />
 
     <span class="label">{{ formattedName }}</span>
   </button>
@@ -48,7 +48,7 @@ onLongPress(toggle, (event) => moreInfo(event));
 .heike-toggle {
   font-family: var(--ha-font-family-body);
   background: var(--ha-card-background, var(--card-background-color, #fff));
-  color: var(--disabled-text-color);
+  color: var(--primary-text-color);
   border-radius: var(--ha-card-border-radius, 12px);
   box-shadow: var(--ha-card-box-shadow, none);
   border-width: var(--ha-card-border-width, 1px);
@@ -78,13 +78,7 @@ onLongPress(toggle, (event) => moreInfo(event));
   }
 
   &[aria-checked='true'] {
-    background: var(--accent-color);
-    color: var(--primary-text-color);
-
-    > .icon {
-      background: var(--secondary-background-color);
-      color: var(--accent-color);
-    }
+    background: var(--primary-color);
   }
 }
 </style>

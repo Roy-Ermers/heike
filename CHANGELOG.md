@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.8
+
+[compare changes](https://git.royermers.nl/roy-ermers/ha-heike/compare/v0.0.7...v0.0.8)
+
+### 💅 Refactors
+
+- **cards:** Improve slider state display and refactor entity states (3d5396d)
+
+### ❤️ Contributors
+
+- Roy Ermers <roy.ermers@medapp.nl>
+
 ## v0.0.7
 
 [compare changes](https://git.royermers.nl/roy-ermers/ha-heike/compare/v0.0.6...v0.0.7)

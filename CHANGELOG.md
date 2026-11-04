@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.0.7
+
+[compare changes](https://git.royermers.nl/roy-ermers/ha-heike/compare/v0.0.6...v0.0.7)
+
+### 🩹 Fixes
+
+- **toggle:** Wrong property access (44dcec1)
+- **styling:** Various inconsistencies (dd191ac)
+
+### 💅 Refactors
+
+- **toggle:** Remove unused brightness from useLight (f9e76ad)
+- **slider:** Replace inline icon with TileIcon component (a76ae3e)
+
+### ❤️ Contributors
+
+- Roy Ermers <roy.ermers@medapp.nl>
+
 ## v0.0.6
 
 [compare changes](https://git.royermers.nl/roy-ermers/ha-heike/compare/v0.0.5...v0.0.6)

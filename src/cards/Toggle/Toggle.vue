@@ -18,7 +18,7 @@ const entity = useEntity(
   () => config?.entity,
   () => config?.name,
 );
-const { isOn, brightness } = useLight(entity);
+const { isOn } = useLight(entity);
 
 const formattedName = computed(() => {
   if (config?.name) return config.name;
